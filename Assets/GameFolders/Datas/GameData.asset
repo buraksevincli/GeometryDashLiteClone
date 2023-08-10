@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ff2c034a21ac2478104b51f4840077, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  moveSpeed: 10
+  jumpForce: 300
