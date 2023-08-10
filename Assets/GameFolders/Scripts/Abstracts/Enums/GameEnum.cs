@@ -6,4 +6,10 @@ namespace GameFolders.Scripts.Abstracts.Enums
         Play,
         Dead
     }
+
+    public enum GamePlayState
+    {
+        Run,
+        Fly
+    }
 }
