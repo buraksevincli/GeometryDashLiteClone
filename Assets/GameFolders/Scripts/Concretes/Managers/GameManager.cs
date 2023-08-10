@@ -1,25 +1,22 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using GameFolders.Scripts.Abstracts.Enums;
+using GameFolders.Scripts.Abstracts.Utilities;
 
 namespace GameFolders.Scripts.Concretes.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoSingleton<GameManager>
     {
-        private void OnEnable()
+        public GameState ActiveGameState { get; private set; } = GameState.Menu;
+
+        private void Start()
         {
-            DataManager.Instance.EventData.OnPlayButton += OnPlayButtonHandler;
+            DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
 
-        private void OnDisable()
+        public void SetActiveGameState(GameState state)
         {
-            DataManager.Instance.EventData.OnPlayButton -= OnPlayButtonHandler;
-        }
-
-        private void OnPlayButtonHandler()
-        {
-            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-            SceneManager.LoadScene(activeSceneIndex + 1);
+            ActiveGameState = state;
+            
+            DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
     }
 }

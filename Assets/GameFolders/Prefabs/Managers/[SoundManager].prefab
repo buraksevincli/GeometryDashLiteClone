@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
+  audios:
+  - {fileID: 8300000, guid: e643bf5a6730dd24981f7fde3fc12c3f, type: 3}
+  - {fileID: 8300000, guid: 811bd73875003c242b98a0d856243ea3, type: 3}
 --- !u!82 &5956645179220451084
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58,7 +61,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -1,6 +1,7 @@
-using System;
+using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GameFolders.Scripts.Concretes.UI
@@ -26,7 +27,9 @@ namespace GameFolders.Scripts.Concretes.UI
 
         private void PlayButtonAction()
         {
-            DataManager.Instance.EventData.OnPlayButton?.Invoke();
+            GameManager.Instance.SetActiveGameState(GameState.Play);
+
+            SceneManager.LoadScene(1);
         }
     }
 }

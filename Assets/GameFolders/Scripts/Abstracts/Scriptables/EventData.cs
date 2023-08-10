@@ -6,6 +6,6 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
     public class EventData : ScriptableObject
     {
         public System.Action OnSoundButton { get; set; }
-        public System.Action OnPlayButton { get; set; }
+        public System.Action OnSetMusic { get; set; }
     }
 }
