@@ -826,6 +826,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2651369115080037216, guid: 8ef26db638723c549b47cd1268152561, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2651369115706057952, guid: 8ef26db638723c549b47cd1268152561, type: 3}
       propertyPath: m_Name
       value: Player1

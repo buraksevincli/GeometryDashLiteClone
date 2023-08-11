@@ -29,10 +29,10 @@ namespace GameFolders.Scripts.Concretes.Managers
 
         private void OnGameOverConditionHandler()
         {
+            ActiveGamePlayState = GamePlayState.Run;
+
             int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(activeSceneIndex);
-
-            ActiveGamePlayState = GamePlayState.Run;
         }
 
         public void SetActiveGameState(GameState state)

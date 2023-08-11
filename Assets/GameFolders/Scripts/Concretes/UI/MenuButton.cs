@@ -29,6 +29,11 @@ namespace GameFolders.Scripts.Concretes.UI
         {
             GameManager.Instance.SetActiveGameState(GameState.Menu);
             
+            if (GameManager.Instance.ActiveGamePlayState != GamePlayState.Run)
+            {
+                GameManager.Instance.ChangeActiveGamePlayState();
+            }
+            
             SceneManager.LoadSceneAsync(0);
         }
     }
