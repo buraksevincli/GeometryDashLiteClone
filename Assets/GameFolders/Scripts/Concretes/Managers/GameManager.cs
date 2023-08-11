@@ -1,5 +1,6 @@
 using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Abstracts.Utilities;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace GameFolders.Scripts.Concretes.Managers
@@ -11,6 +12,8 @@ namespace GameFolders.Scripts.Concretes.Managers
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
+            
             DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
 

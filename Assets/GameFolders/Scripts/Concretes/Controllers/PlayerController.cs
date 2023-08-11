@@ -18,7 +18,6 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private bool _isJump;
         private bool _onGround;
         private bool _isFly;
-        private bool _shipCanCrash;
 
         private void Awake()
         {
@@ -87,11 +86,6 @@ namespace GameFolders.Scripts.Concretes.Controllers
                         _isFly = false;
                     }
 
-                    if (_shipCanCrash && _onGround)
-                    {
-                        DataManager.Instance.EventData.OnGameOverCondition?.Invoke();
-                    }
-
                     break;
             }
         }
@@ -109,11 +103,6 @@ namespace GameFolders.Scripts.Concretes.Controllers
             if (other.gameObject.CompareTag("Ground"))
             {
                 _onGround = false;
-            }
-
-            if (GameManager.Instance.ActiveGamePlayState == GamePlayState.Fly)
-            {
-                _shipCanCrash = true;
             }
         }
 

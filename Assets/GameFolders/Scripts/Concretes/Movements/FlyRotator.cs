@@ -28,6 +28,12 @@ namespace GameFolders.Scripts.Concretes.Movements
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, DataManager.Instance.GameData.FlyRotationSpeed * Time.deltaTime);
                 }
             }
+            else
+            {
+                Quaternion targetRotation = Quaternion.Euler(0f, 0f, 0f);
+                
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+            }
         }
     }
 }
