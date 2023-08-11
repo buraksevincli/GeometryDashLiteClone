@@ -1,4 +1,5 @@
 using GameFolders.Scripts.Abstracts.Enums;
+using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
 
@@ -6,93 +7,127 @@ namespace GameFolders.Scripts.Concretes.Controllers
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private Transform bodyTransform;
+        [SerializeField] private Transform runBody;
+        [SerializeField] private Transform flyBody;
 
-        private readonly GamePlayState _gamePlayState = GamePlayState.Run;
-        
         private Mover _mover;
         private Jump _jump;
-        private Rotator _rotator;
-        
+        private Fly _fly;
+        private FlyRotator _flyRotator;
+
         private bool _isJump;
         private bool _onGround;
-        
+        private bool _isFly;
+        private bool _shipCanCrash;
+
         private void Awake()
         {
             _mover = new Mover(this);
             _jump = new Jump(this);
-            _rotator = new Rotator(bodyTransform);
+            _fly = new Fly(this);
+            _flyRotator = new FlyRotator(this);
+        }
+
+        private void OnEnable()
+        {
+            DataManager.Instance.EventData.OnChangeGamePlayState += OnChangeGamePlayStateHandler;
+        }
+
+        private void OnDisable()
+        {
+            DataManager.Instance.EventData.OnChangeGamePlayState -= OnChangeGamePlayStateHandler;
         }
 
         private void FixedUpdate()
         {
-            switch (_gamePlayState)
+            _mover.FixedTick();
+
+            switch (GameManager.Instance.ActiveGamePlayState)
             {
                 case GamePlayState.Run:
-                    _mover.FixedTick();
-
                     if (_isJump)
                     {
                         _jump.FixedTick();
                         _isJump = false;
                     }
+
                     break;
                 case GamePlayState.Fly:
-                    //uçma kontrolleri
+                    if (_isFly)
+                    {
+                        _fly.FixedTick();
+                    }
+
                     break;
             }
-            
         }
 
         private void Update()
         {
-            switch (_gamePlayState)
+            switch (GameManager.Instance.ActiveGamePlayState)
             {
                 case GamePlayState.Run:
 
-                    _rotator.Tick(_onGround);
-                    
                     if (Input.GetMouseButton(0) && _onGround)
                     {
                         _isJump = true;
                     }
-                    
+
                     break;
                 case GamePlayState.Fly:
-                    //uçma kontrolleri
+
+                    _flyRotator.Tick(_onGround, flyBody);
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        _isFly = true;
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        _isFly = false;
+                    }
+
+                    if (_shipCanCrash && _onGround)
+                    {
+                        DataManager.Instance.EventData.OnGameOverCondition?.Invoke();
+                    }
+
                     break;
             }
         }
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            switch (_gamePlayState)
+            if (col.gameObject.CompareTag("Ground"))
             {
-                case GamePlayState.Run:
-                    if (col.gameObject.CompareTag("Ground"))
-                    {
-                        _onGround = true;
-                    }
-                    break;
-                case GamePlayState.Fly:
-                    //uçma kontrolleri
-                    break;
+                _onGround = true;
             }
-            
         }
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            switch (_gamePlayState)
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                _onGround = false;
+            }
+
+            if (GameManager.Instance.ActiveGamePlayState == GamePlayState.Fly)
+            {
+                _shipCanCrash = true;
+            }
+        }
+
+        private void OnChangeGamePlayStateHandler()
+        {
+            switch (GameManager.Instance.ActiveGamePlayState)
             {
                 case GamePlayState.Run:
-                    if (other.gameObject.CompareTag("Ground"))
-                    {
-                        _onGround = false;
-                    }
+                    flyBody.gameObject.SetActive(false);
+                    runBody.gameObject.SetActive(true);
                     break;
                 case GamePlayState.Fly:
-                    //uçma kontrolleri
+                    flyBody.gameObject.SetActive(true);
+                    runBody.gameObject.SetActive(false);
                     break;
             }
         }

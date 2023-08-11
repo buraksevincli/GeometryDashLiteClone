@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 3372135503700604622, guid: c35b37f6c7adcba4aa7abfc6b8c17314, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3808017844437771756, guid: c35b37f6c7adcba4aa7abfc6b8c17314, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.75

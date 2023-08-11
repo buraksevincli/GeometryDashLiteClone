@@ -1,3 +1,4 @@
+using GameFolders.Scripts.Concretes.Helpers;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ namespace GameFolders.Scripts.Concretes.Movements
 
         public void FixedTick()
         {
-            _rigidbody2D.AddForce(Vector2.up * DataManager.Instance.GameData.JumpForce);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+            _rigidbody2D.AddForce(VectorHelper.Up * DataManager.Instance.GameData.JumpForce, ForceMode2D.Impulse);
         }
     }
 }
