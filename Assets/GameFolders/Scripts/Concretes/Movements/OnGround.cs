@@ -12,9 +12,9 @@ namespace GameFolders.Scripts.Concretes.Movements
             _transform = playerController.GetComponent<Transform>();
         }
 
-        public bool Tick(LayerMask groundLayer)
+        public bool Tick()
         {
-            return Physics2D.OverlapCircle(_transform.position, DataManager.Instance.GameData.GroundCheckRayDistance, groundLayer);
+            return Physics2D.OverlapCircle(_transform.position, DataManager.Instance.GameData.GroundCheckRayDistance, DataManager.Instance.GameData.GroundLayer);
         }
     }
 }

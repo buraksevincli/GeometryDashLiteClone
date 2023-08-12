@@ -9,7 +9,6 @@ namespace GameFolders.Scripts.Concretes.Controllers
     {
         [SerializeField] private Transform runBody;
         [SerializeField] private Transform flyBody;
-        [SerializeField] private LayerMask groundLayer;
 
         private Mover _mover;
         private Jump _jump;
@@ -73,15 +72,16 @@ namespace GameFolders.Scripts.Concretes.Controllers
             {
                 case GamePlayState.Run:
 
-                    if (Input.GetMouseButton(0) && _onGround.Tick(groundLayer))
+                    if (Input.GetMouseButton(0) && _onGround.Tick())
                     {
                         _isJump = true;
+                        _jump.GetLandingTime();
                     }
 
                     break;
                 case GamePlayState.Fly:
 
-                    _flyRotator.Tick(_onGround.Tick(groundLayer), flyBody);
+                    _flyRotator.Tick(_onGround.Tick(), flyBody);
 
                     if (Input.GetMouseButton(0))
                     {
