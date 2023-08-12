@@ -7,7 +7,9 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
     {
         public System.Action OnSoundButton { get; set; }
         public System.Action OnSetMusic { get; set; }
+        public System.Action<bool> OnMusicStop { get; set; }
         public System.Action OnChangeGamePlayState { get; set; }
         public System.Action OnGameOverCondition { get; set; }
+        public System.Action OnWinCondition { get; set; }
     }
 }

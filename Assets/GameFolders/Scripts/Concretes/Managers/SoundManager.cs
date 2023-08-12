@@ -9,6 +9,7 @@ namespace GameFolders.Scripts.Concretes.Managers
         [SerializeField] private AudioClip[] audios;
 
         private AudioSource _audioSource;
+        private float _musicTime;
 
         protected override void Awake()
         {
@@ -26,12 +27,14 @@ namespace GameFolders.Scripts.Concretes.Managers
         {
             DataManager.Instance.EventData.OnSoundButton += OnSoundButtonHandler;
             DataManager.Instance.EventData.OnSetMusic += OnSetMusicHandler;
+            DataManager.Instance.EventData.OnMusicStop += OnMusicStopHandler;
         }
 
         private void OnDisable()
         {
             DataManager.Instance.EventData.OnSoundButton -= OnSoundButtonHandler;
             DataManager.Instance.EventData.OnSetMusic -= OnSetMusicHandler;
+            DataManager.Instance.EventData.OnMusicStop -= OnMusicStopHandler;
         }
 
         private void OnSetMusicHandler()
@@ -41,12 +44,12 @@ namespace GameFolders.Scripts.Concretes.Managers
                 case GameState.Menu:
                     _audioSource.clip = audios[0];
                     _audioSource.Play();
-                    _audioSource.mute = GameManager.Instance.isMusicPlay;
+                    _audioSource.mute = GameManager.Instance.IsMusicMute;
                     break;
                 case GameState.Play:
                     _audioSource.clip = audios[1];
                     _audioSource.Play();
-                    _audioSource.mute = GameManager.Instance.isMusicPlay;
+                    _audioSource.mute = GameManager.Instance.IsMusicMute;
                     break;
             }
         }
@@ -54,7 +57,22 @@ namespace GameFolders.Scripts.Concretes.Managers
         private void OnSoundButtonHandler()
         {
             _audioSource.mute = !_audioSource.mute;
-            GameManager.Instance.isMusicPlay = _audioSource.mute;
+            GameManager.Instance.IsMusicMute = _audioSource.mute;
+        }
+        
+        private void OnMusicStopHandler(bool panelSetActive)
+        {
+            switch (panelSetActive)
+            {
+                case true:
+                    _musicTime = _audioSource.time;
+                    _audioSource.Stop();
+                    break;
+                case false:
+                    _audioSource.time = _musicTime;
+                    _audioSource.Play();
+                    break;
+            }
         }
     }
 }

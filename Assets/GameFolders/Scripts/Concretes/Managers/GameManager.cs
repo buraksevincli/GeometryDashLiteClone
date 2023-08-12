@@ -10,14 +10,12 @@ namespace GameFolders.Scripts.Concretes.Managers
     {
         public GameState ActiveGameState { get; private set; } = GameState.Menu;
         public GamePlayState ActiveGamePlayState { get; private set; } = GamePlayState.Run;
-        
-        public bool isMusicPlay;
+
+        public bool IsMusicMute { get; set; }
 
         private void Start()
         {
             Application.targetFrameRate = 60;
-            
-            DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
 
         private void OnEnable()

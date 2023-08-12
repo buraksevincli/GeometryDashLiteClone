@@ -1,3 +1,4 @@
+using System;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,12 @@ namespace GameFolders.Scripts.Concretes.UI
             _soundButton = GetComponent<Button>();
         }
 
+        private void Start()
+        {
+            soundEnable.SetActive(!GameManager.Instance.IsMusicMute);
+            soundDisable.SetActive(GameManager.Instance.IsMusicMute);
+        }
+
         private void OnEnable()
         {
             _soundButton.onClick?.AddListener(SoundButtonAction);
@@ -28,8 +35,8 @@ namespace GameFolders.Scripts.Concretes.UI
 
         private void SoundButtonAction()
         {
-            soundEnable.SetActive(!soundEnable.activeSelf);
-            soundDisable.SetActive(!soundDisable.activeSelf);
+            soundEnable.SetActive(GameManager.Instance.IsMusicMute);
+            soundDisable.SetActive(!GameManager.Instance.IsMusicMute);
             
             DataManager.Instance.EventData.OnSoundButton?.Invoke();
         }
