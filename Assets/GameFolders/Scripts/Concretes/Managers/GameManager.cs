@@ -2,6 +2,7 @@ using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Abstracts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace GameFolders.Scripts.Concretes.Managers
 {
@@ -9,6 +10,8 @@ namespace GameFolders.Scripts.Concretes.Managers
     {
         public GameState ActiveGameState { get; private set; } = GameState.Menu;
         public GamePlayState ActiveGamePlayState { get; private set; } = GamePlayState.Run;
+        
+        public bool isMusicPlay;
 
         private void Start()
         {
@@ -44,7 +47,7 @@ namespace GameFolders.Scripts.Concretes.Managers
             DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
 
-        private async void ChangeActiveGamePlayState()
+        private void ChangeActiveGamePlayState()
         {
             ActiveGamePlayState = ActiveGamePlayState switch
             {

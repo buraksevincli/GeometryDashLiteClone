@@ -1,4 +1,3 @@
-using GameFolders.Scripts.Concretes.Helpers;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace GameFolders.Scripts.Concretes.Movements
 
         public bool Tick(LayerMask groundLayer)
         {
-            return Physics2D.Raycast(_transform.position, VectorHelper.Down, DataManager.Instance.GameData.GroundCheckRayDistance, groundLayer);
+            return Physics2D.OverlapCircle(_transform.position, DataManager.Instance.GameData.GroundCheckRayDistance, groundLayer);
         }
     }
 }

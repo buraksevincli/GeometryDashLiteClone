@@ -1,4 +1,5 @@
 using GameFolders.Scripts.Abstracts.Enums;
+using GameFolders.Scripts.Concretes.Helpers;
 using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private FlyRotator _flyRotator;
         private OnGround _onGround;
 
+        private Rigidbody2D _rigidbody2D;
+
         private bool _isJump;
         private bool _isFly;
 
@@ -27,6 +30,8 @@ namespace GameFolders.Scripts.Concretes.Controllers
             _fly = new Fly(this);
             _flyRotator = new FlyRotator(this);
             _onGround = new OnGround(this);
+
+            _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         private void OnEnable()
@@ -99,10 +104,12 @@ namespace GameFolders.Scripts.Concretes.Controllers
                 case GamePlayState.Run:
                     flyBody.gameObject.SetActive(false);
                     runBody.gameObject.SetActive(true);
+                    _rigidbody2D.gravityScale = 6f;
                     break;
                 case GamePlayState.Fly:
                     flyBody.gameObject.SetActive(true);
                     runBody.gameObject.SetActive(false);
+                    _rigidbody2D.gravityScale = 3f;
                     break;
             }
         }

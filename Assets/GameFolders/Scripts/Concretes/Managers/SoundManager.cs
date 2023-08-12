@@ -17,6 +17,11 @@ namespace GameFolders.Scripts.Concretes.Managers
             _audioSource = GetComponent<AudioSource>();
         }
 
+        private void Start()
+        {
+            DataManager.Instance.EventData.OnSetMusic?.Invoke();
+        }
+
         private void OnEnable()
         {
             DataManager.Instance.EventData.OnSoundButton += OnSoundButtonHandler;
@@ -36,10 +41,12 @@ namespace GameFolders.Scripts.Concretes.Managers
                 case GameState.Menu:
                     _audioSource.clip = audios[0];
                     _audioSource.Play();
+                    _audioSource.mute = GameManager.Instance.isMusicPlay;
                     break;
                 case GameState.Play:
                     _audioSource.clip = audios[1];
                     _audioSource.Play();
+                    _audioSource.mute = GameManager.Instance.isMusicPlay;
                     break;
             }
         }
@@ -47,6 +54,7 @@ namespace GameFolders.Scripts.Concretes.Managers
         private void OnSoundButtonHandler()
         {
             _audioSource.mute = !_audioSource.mute;
+            GameManager.Instance.isMusicPlay = _audioSource.mute;
         }
     }
 }
