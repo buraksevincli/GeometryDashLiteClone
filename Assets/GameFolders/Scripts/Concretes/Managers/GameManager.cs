@@ -19,12 +19,14 @@ namespace GameFolders.Scripts.Concretes.Managers
 
         private void OnEnable()
         {
+            DataManager.Instance.EventData.OnChangeGamePlayState += ChangeActiveGamePlayState;
             DataManager.Instance.EventData.OnGameOverCondition += OnGameOverConditionHandler;
         }
 
         private void OnDisable()
         {
-            DataManager.Instance.EventData.OnGameOverCondition += OnGameOverConditionHandler;
+            DataManager.Instance.EventData.OnChangeGamePlayState -= ChangeActiveGamePlayState;
+            DataManager.Instance.EventData.OnGameOverCondition -= OnGameOverConditionHandler;
         }
 
         private void OnGameOverConditionHandler()
@@ -42,7 +44,7 @@ namespace GameFolders.Scripts.Concretes.Managers
             DataManager.Instance.EventData.OnSetMusic?.Invoke();
         }
 
-        public void ChangeActiveGamePlayState()
+        private async void ChangeActiveGamePlayState()
         {
             ActiveGamePlayState = ActiveGamePlayState switch
             {
@@ -50,8 +52,6 @@ namespace GameFolders.Scripts.Concretes.Managers
                 GamePlayState.Fly => GamePlayState.Run,
                 _ => ActiveGamePlayState
             };
-            
-            DataManager.Instance.EventData.OnChangeGamePlayState?.Invoke();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace GameFolders.Scripts.Concretes.UI
             
             if (GameManager.Instance.ActiveGamePlayState != GamePlayState.Run)
             {
-                GameManager.Instance.ChangeActiveGamePlayState();
+                DataManager.Instance.EventData.OnChangeGamePlayState?.Invoke();
             }
             
             SceneManager.LoadSceneAsync(0);

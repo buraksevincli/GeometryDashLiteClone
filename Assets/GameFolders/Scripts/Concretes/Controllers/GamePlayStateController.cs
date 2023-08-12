@@ -9,7 +9,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         {
             if (col.TryGetComponent(out PlayerController playerController))
             {
-                GameManager.Instance.ChangeActiveGamePlayState();
+                DataManager.Instance.EventData.OnChangeGamePlayState?.Invoke();
             }
         }
     }

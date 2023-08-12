@@ -9,14 +9,15 @@ namespace GameFolders.Scripts.Concretes.Controllers
     {
         [SerializeField] private Transform runBody;
         [SerializeField] private Transform flyBody;
+        [SerializeField] private LayerMask groundLayer;
 
         private Mover _mover;
         private Jump _jump;
         private Fly _fly;
         private FlyRotator _flyRotator;
+        private OnGround _onGround;
 
         private bool _isJump;
-        private bool _onGround;
         private bool _isFly;
 
         private void Awake()
@@ -25,6 +26,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
             _jump = new Jump(this);
             _fly = new Fly(this);
             _flyRotator = new FlyRotator(this);
+            _onGround = new OnGround(this);
         }
 
         private void OnEnable()
@@ -67,7 +69,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
             {
                 case GamePlayState.Run:
 
-                    if (Input.GetMouseButton(0) && _onGround)
+                    if (Input.GetMouseButton(0) && _onGround.Tick(groundLayer))
                     {
                         _isJump = true;
                     }
@@ -75,7 +77,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
                     break;
                 case GamePlayState.Fly:
 
-                    _flyRotator.Tick(_onGround, flyBody);
+                    _flyRotator.Tick(_onGround.Tick(groundLayer), flyBody);
 
                     if (Input.GetMouseButton(0))
                     {
@@ -87,22 +89,6 @@ namespace GameFolders.Scripts.Concretes.Controllers
                     }
 
                     break;
-            }
-        }
-
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            if (col.gameObject.CompareTag("Ground"))
-            {
-                _onGround = true;
-            }
-        }
-
-        private void OnCollisionExit2D(Collision2D other)
-        {
-            if (other.gameObject.CompareTag("Ground"))
-            {
-                _onGround = false;
             }
         }
 

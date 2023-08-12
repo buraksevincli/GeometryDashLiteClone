@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3840598790559403012}
   - component: {fileID: 3840598790559403013}
   - component: {fileID: 9125225679499862851}
+  - component: {fileID: 398122339441275069}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 13e2f523d793d6e4a90c0e6dc9efeac5, type: 3}
-  m_Color: {r: 0.21960786, g: 0.03137255, b: 0.34901962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -111,3 +112,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 1.25}
   m_EdgeRadius: 0
+--- !u!114 &398122339441275069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840598790559403014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b379d503b605c4a877ce4f1c264d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colors:
+  - {r: 0, g: 0, b: 0.8588236, a: 1}
+  - {r: 0.55308473, g: 0, b: 0.6037736, a: 1}
+  - {r: 1, g: 0, b: 0.69803923, a: 1}
+  - {r: 0.1300379, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  cycleDuration: 10

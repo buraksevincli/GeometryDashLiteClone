@@ -16,3 +16,4 @@ MonoBehaviour:
   jumpForce: 10
   flyForce: 300
   flyRotationSpeed: 4
+  groundCheckRayDistance: 0.5

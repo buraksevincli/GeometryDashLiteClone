@@ -472,6 +472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runBody: {fileID: 3372135503700604623}
   flyBody: {fileID: 3380230130420085347}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &3772034684901127828
 Rigidbody2D:
   serializedVersion: 4

@@ -9,10 +9,12 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
         [SerializeField] private int jumpForce;
         [SerializeField] private int flyForce;
         [SerializeField] private int flyRotationSpeed;
+        [SerializeField] private float groundCheckRayDistance;
 
         public int MoveSpeed => moveSpeed;
         public int JumpForce => jumpForce;
         public int FlyForce => flyForce;
         public int FlyRotationSpeed => flyRotationSpeed;
+        public float GroundCheckRayDistance => groundCheckRayDistance;
     }
 }
