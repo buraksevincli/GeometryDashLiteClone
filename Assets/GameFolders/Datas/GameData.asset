@@ -16,6 +16,7 @@ MonoBehaviour:
   jumpForce: 15
   flyForce: 300
   flyRotationSpeed: 4
+  deadTime: 0.5
   groundCheckRayDistance: 0.7
   groundLayer:
     serializedVersion: 2
