@@ -1,3 +1,4 @@
+using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace GameFolders.Scripts.Concretes.Effects
     {
         [SerializeField] private ParticleSystem particleEffect1;
         [SerializeField] private ParticleSystem particleEffect2;
+        [SerializeField] private ParticleSystem runBodyParticle;
+        [SerializeField] private ParticleSystem flyBodyParticle;
         
         private void OnEnable()
         {
@@ -22,6 +25,18 @@ namespace GameFolders.Scripts.Concretes.Effects
         {
             particleEffect1.Play();
             particleEffect2.Play();
+
+            switch (GameManager.Instance.ActiveGamePlayState)
+            {
+                case GamePlayState.Run:
+                    runBodyParticle.Play();
+                    flyBodyParticle.Stop();
+                    break;
+                case GamePlayState.Fly:
+                    runBodyParticle.Stop();
+                    flyBodyParticle.Play();
+                    break;
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Abstracts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace GameFolders.Scripts.Concretes.Managers
 {

@@ -4,7 +4,6 @@ namespace GameFolders.Scripts.Abstracts.Enums
     {
         Menu,
         Play,
-        Dead
     }
 
     public enum GamePlayState

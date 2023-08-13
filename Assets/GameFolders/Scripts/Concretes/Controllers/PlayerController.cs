@@ -1,4 +1,5 @@
 using GameFolders.Scripts.Abstracts.Enums;
+using GameFolders.Scripts.Concretes.Helpers;
 using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
         private Fly _fly;
         private FlyRotator _flyRotator;
         private OnGround _onGround;
+        private Rotator _rotator;
 
         private Rigidbody2D _rigidbody2D;
 
@@ -28,6 +30,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
             _fly = new Fly(this);
             _flyRotator = new FlyRotator(this);
             _onGround = new OnGround(this);
+            _rotator = new Rotator();
 
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
@@ -71,6 +74,8 @@ namespace GameFolders.Scripts.Concretes.Controllers
             switch (GameManager.Instance.ActiveGamePlayState)
             {
                 case GamePlayState.Run:
+                    
+                    _rotator.Tick(_onGround.Tick(), runBody);
 
                     if (Input.GetMouseButton(0) && _onGround.Tick())
                     {

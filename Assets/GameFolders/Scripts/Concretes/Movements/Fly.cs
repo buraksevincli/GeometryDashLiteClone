@@ -16,7 +16,7 @@ namespace GameFolders.Scripts.Concretes.Movements
         public void FixedTick()
         {
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
-            _rigidbody2D.AddForce(VectorHelper.Up * (DataManager.Instance.GameData.FlyForce * Time.deltaTime),
+            _rigidbody2D.AddForce(VectorTwoHelper.Up * (DataManager.Instance.GameData.FlyForce * Time.deltaTime),
                 ForceMode2D.Impulse);
         }
     }
