@@ -14,6 +14,7 @@ namespace GameFolders.Scripts.Concretes.Managers
         public bool IsMusicMute { get; set; }
 
         private WaitForSeconds _waitForDead;
+        public bool isDead;
 
         protected override void Awake()
         {
@@ -62,14 +63,18 @@ namespace GameFolders.Scripts.Concretes.Managers
 
         private IEnumerator GameOver()
         {
+            if (isDead) yield break;
+
+            isDead = true;
+            
             DataManager.Instance.EventData.OnDead?.Invoke();
 
             ActiveGameState = GameState.Play;
             ActiveGamePlayState = GamePlayState.Run;
-            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
             yield return _waitForDead;
-
+            
+            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(activeSceneIndex);
         }
     }

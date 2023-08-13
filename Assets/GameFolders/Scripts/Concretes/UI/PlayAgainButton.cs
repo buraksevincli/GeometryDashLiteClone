@@ -1,5 +1,6 @@
 using GameFolders.Scripts.Concretes.Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayAgainButton : MonoBehaviour
@@ -23,6 +24,6 @@ public class PlayAgainButton : MonoBehaviour
 
     private void PlayAgainButtonAction()
     {
-        DataManager.Instance.EventData.OnGameOverCondition?.Invoke();
+        SceneManager.LoadScene(1);
     }
 }

@@ -21,6 +21,7 @@ namespace GameFolders.Scripts.Concretes.Managers
         private void Start()
         {
             DataManager.Instance.EventData.OnSetMusic?.Invoke();
+            GameManager.Instance.isDead = false;
         }
 
         private void OnEnable()
