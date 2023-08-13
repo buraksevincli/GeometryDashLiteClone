@@ -2,67 +2,61 @@ using System.Collections.Generic;
 using GameFolders.Scripts.Abstracts.Utilities;
 using UnityEngine;
 
-public class DrawTrajectory : MonoSingleton<DrawTrajectory>
+namespace GameFolders.Scripts.Concretes.Trajectory
 {
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private int lineSegmentCount = 20;
-    [SerializeField] private float rayDistance;
-    [SerializeField] private Transform visualHitObject;
-    [SerializeField] private bool debugMode;
-
-    private readonly List<Vector3> _points = new List<Vector3>();
-
-    public float GetLandingTime(Vector2 forceVector, Rigidbody2D rigidbody, Vector3 startPoint, LayerMask layerMask)
+    public class DrawTrajectory : MonoSingleton<DrawTrajectory>
     {
-        Vector2 velocity = (forceVector / rigidbody.mass) * Time.fixedDeltaTime;
-        float flightDuration = (2 * velocity.y) / Physics2D.gravity.y;
-        float stepTime = flightDuration / lineSegmentCount;
+        [SerializeField] private int segmentCount = 20;
+        [SerializeField] private float rayDistance;
+        [SerializeField] private Transform visualHitObject;
+        [SerializeField] private bool debugMode;
 
-        _points.Clear();
+        private readonly List<Vector3> _points = new List<Vector3>();
 
-        for (int i = 0; i < lineSegmentCount; i++)
+        public Vector3 GetLandingTime(Vector2 velocity, Rigidbody2D rigidbody, Vector3 startPoint, LayerMask layerMask)
         {
-            float stepTimePassed = stepTime * i;
-            Vector3 movementVector = new Vector3(
-                velocity.x * stepTimePassed,
-                velocity.y * stepTimePassed - 1f * Physics2D.gravity.y * Mathf.Pow(stepTimePassed, 2));
+            float flightDuration = (2 * velocity.y) / (Physics2D.gravity.y * rigidbody.gravityScale);
+            float stepTime = flightDuration / segmentCount;
 
-            Vector3 newPosition = startPoint - movementVector;
+            _points.Clear();
 
-            _points.Add(newPosition);
-
-            if (debugMode)
+            for (int i = 0; i < segmentCount; i++)
             {
-                visualHitObject.position = newPosition;
-                lineRenderer.positionCount = _points.Count;
-                lineRenderer.SetPositions(_points.ToArray());
-            }
+                float stepTimePassed = stepTime * i;
+                Vector3 movementVector = new Vector3(
+                    velocity.x * stepTimePassed,
+                    velocity.y * stepTimePassed - 1f * Physics2D.gravity.y * rigidbody.gravityScale * Mathf.Pow(stepTimePassed, 2));
 
-            if (_points.Count < 2) continue;
+                Vector3 newPosition = startPoint - movementVector;
 
-            if (!(_points[^2].y > newPosition.y)) continue; // Object goes up
+                _points.Add(newPosition);
+
+                if (debugMode)
+                {
+                    visualHitObject.position = newPosition;
+                }
+
+                if (_points.Count < 2) continue;
+
+                if (!(_points[^2].y > newPosition.y)) continue; // Object goes up
             
-            RaycastHit2D hit = Physics2D.Raycast(newPosition, Vector2.down, rayDistance, layerMask);
+                RaycastHit2D hit = Physics2D.Raycast(newPosition, Vector2.down, rayDistance, layerMask);
 
-            if (hit.collider != null)
-            {
-                return Mathf.Abs(stepTimePassed);
+                if (hit.collider != null)
+                {
+                    return newPosition;
+                }
             }
+
+            return Vector3.zero;
         }
 
-        return 0;
-    }
-
-    private void OnValidate()
-    {
-        if (lineRenderer != null)
+        private void OnValidate()
         {
-            lineRenderer.gameObject.SetActive(debugMode);
-        }
-
-        if (visualHitObject != null)
-        {
-            visualHitObject.gameObject.SetActive(debugMode);
+            if (visualHitObject != null)
+            {
+                visualHitObject.gameObject.SetActive(debugMode);
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
@@ -76,9 +75,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
                     if (Input.GetMouseButton(0) && _onGround.Tick())
                     {
                         _isJump = true;
-                        transform.DORotate(
-                            new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 180),
-                            _jump.GetLandingTime());
+                        _jump.GetLandingTime();
                     }
 
                     break;
