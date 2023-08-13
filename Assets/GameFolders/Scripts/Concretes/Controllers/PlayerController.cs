@@ -1,5 +1,4 @@
 using GameFolders.Scripts.Abstracts.Enums;
-using GameFolders.Scripts.Concretes.Helpers;
 using GameFolders.Scripts.Concretes.Managers;
 using GameFolders.Scripts.Concretes.Movements;
 using UnityEngine;
@@ -80,7 +79,7 @@ namespace GameFolders.Scripts.Concretes.Controllers
                     if (Input.GetMouseButton(0) && _onGround.Tick())
                     {
                         _isJump = true;
-                        _jump.GetLandingTime();
+                        _jump.GetLandingTime(); // zıplayacağımız noktayı zıpladığımız an tespit edip varış süremizi hesaplayarak rotasyon gerçekleştirecektim ancak tam sonuca varamadım.
                     }
 
                     break;

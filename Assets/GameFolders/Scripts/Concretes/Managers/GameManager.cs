@@ -1,3 +1,4 @@
+using System.Collections;
 using GameFolders.Scripts.Abstracts.Enums;
 using GameFolders.Scripts.Abstracts.Utilities;
 using UnityEngine;
@@ -11,6 +12,14 @@ namespace GameFolders.Scripts.Concretes.Managers
         public GamePlayState ActiveGamePlayState { get; private set; } = GamePlayState.Run;
 
         public bool IsMusicMute { get; set; }
+
+        private WaitForSeconds _waitForDead;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _waitForDead = new WaitForSeconds(DataManager.Instance.GameData.DeadTime);
+        }
 
         private void Start()
         {
@@ -31,10 +40,7 @@ namespace GameFolders.Scripts.Concretes.Managers
 
         private void OnGameOverConditionHandler()
         {
-            ActiveGamePlayState = GamePlayState.Run;
-
-            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(activeSceneIndex);
+            StartCoroutine(GameOver());
         }
 
         public void SetActiveGameState(GameState state)
@@ -52,6 +58,19 @@ namespace GameFolders.Scripts.Concretes.Managers
                 GamePlayState.Fly => GamePlayState.Run,
                 _ => ActiveGamePlayState
             };
+        }
+
+        private IEnumerator GameOver()
+        {
+            DataManager.Instance.EventData.OnDead?.Invoke();
+
+            ActiveGameState = GameState.Play;
+            ActiveGamePlayState = GamePlayState.Run;
+            int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+            yield return _waitForDead;
+
+            SceneManager.LoadScene(activeSceneIndex);
         }
     }
 }

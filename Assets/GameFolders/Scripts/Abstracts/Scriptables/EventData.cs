@@ -11,5 +11,6 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
         public System.Action OnChangeGamePlayState { get; set; }
         public System.Action OnGameOverCondition { get; set; }
         public System.Action OnWinCondition { get; set; }
+        public System.Action OnDead { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace GameFolders.Scripts.Abstracts.Scriptables
@@ -6,10 +5,14 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
     [CreateAssetMenu(fileName = "GameData", menuName = "Data/Game Data")]
     public class GameData : ScriptableObject
     {
+        [Header("Player Settings")]
         [SerializeField] private int moveSpeed;
         [SerializeField] private int jumpForce;
         [SerializeField] private int flyForce;
         [SerializeField] private int flyRotationSpeed;
+        [SerializeField] private float deadTime;
+        
+        [Header("GroundCheck")]
         [SerializeField] private float groundCheckRayDistance;
         [SerializeField] private LayerMask groundLayer;
 
@@ -19,5 +22,6 @@ namespace GameFolders.Scripts.Abstracts.Scriptables
         public int FlyRotationSpeed => flyRotationSpeed;
         public float GroundCheckRayDistance => groundCheckRayDistance;
         public LayerMask GroundLayer => groundLayer;
+        public float DeadTime => deadTime;
     }
 }

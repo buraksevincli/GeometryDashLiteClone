@@ -51,6 +51,12 @@ namespace GameFolders.Scripts.Concretes.Managers
                     _audioSource.Play();
                     _audioSource.mute = GameManager.Instance.IsMusicMute;
                     break;
+                case GameState.Dead:
+                    _audioSource.clip = audios[2];
+                    _audioSource.loop = false;
+                    _audioSource.Play();
+                    _audioSource.mute = GameManager.Instance.IsMusicMute;
+                    break;
             }
         }
 

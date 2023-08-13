@@ -39,7 +39,7 @@ namespace GameFolders.Scripts.Concretes.Trajectory
 
                 if (_points.Count < 2) continue;
 
-                if (!(_points[^2].y > newPosition.y)) continue; // Object goes up
+                if (!(_points[^2].y > newPosition.y)) continue;
             
                 RaycastHit2D hit = Physics2D.Raycast(newPosition, VectorTwoHelper.Down, rayDistance, layerMask);
 

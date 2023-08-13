@@ -14,11 +14,13 @@ namespace GameFolders.Scripts.Concretes.Effects
         private void OnEnable()
         {
             DataManager.Instance.EventData.OnChangeGamePlayState += OnChangeGamePlayStateHandler;
+            DataManager.Instance.EventData.OnDead += OnDeadHandler;
         }
 
         private void OnDisable()
         {
             DataManager.Instance.EventData.OnChangeGamePlayState -= OnChangeGamePlayStateHandler;
+            DataManager.Instance.EventData.OnDead -= OnDeadHandler;
         }
 
         private void OnChangeGamePlayStateHandler()
@@ -37,6 +39,12 @@ namespace GameFolders.Scripts.Concretes.Effects
                     flyBodyParticle.Play();
                     break;
             }
+        }
+        
+        private void OnDeadHandler()
+        {
+            GameManager.Instance.SetActiveGameState(GameState.Dead);
+            particleEffect2.Play();
         }
     }
 }
